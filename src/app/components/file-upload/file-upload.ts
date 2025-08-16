@@ -52,8 +52,8 @@ export class FileUpload {
           return;
 
         if (
-          (this.label() === 'Followers' && !selectedFile.length) ||
-          !selectedFile[0].string_list_data.length
+          this.label() === 'Followers' &&
+          !selectedFile?.[0]?.string_list_data?.length
         )
           return;
 
