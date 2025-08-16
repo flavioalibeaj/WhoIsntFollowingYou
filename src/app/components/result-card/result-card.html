@@ -1,0 +1,18 @@
+<mat-card>
+  <mat-card-header>
+    <!-- todo add text wrap -->
+    <span mat-card-avatar [avatarBackground]="person().value">
+      {{ person().value | firstCharacter }}
+    </span>
+    <mat-card-title>{{ person().value }}</mat-card-title>
+    <mat-card-subtitle>
+      Started following: {{ person().timestamp | unixToDate | date : 'short' }}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-actions>
+    <wify-button type="icon" tooltip="Copy link to clipboard" icon="content_copy" [elevateOnHover]="true"
+      (clicked)="copyToClipboard()" />
+    <wify-button appearance="tonal" text="Go to account" icon="account_circle" [elevateOnHover]="true"
+      (clicked)="goToAccount()" />
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,21 @@
+<mat-card class="p-4 gap-4 min-w-52" [elevateOnHover]="true" (click)="!isDisabled() && fileInput.click()">
+  <mat-card-header class="justify-center">
+    <mat-icon>attach_file</mat-icon>
+  </mat-card-header>
+  <mat-card-content class="text-center">
+    <p>{{ fileName() ?? label() }}</p>
+  </mat-card-content>
+</mat-card>
+
+<input #fileInput type="file" hidden (change)="onFileSelected($event)" [accept]="accept" />
+
+<!-- <mat-form-field (click)="!isDisabled() && fileInput.click()">
+      <mat-label>{{ label() }}</mat-label>
+      <input matInput readonly [disabled]="isDisabled()" [value]="fileName()" />
+      <wify-button
+        matPrefix
+        type="icon"
+        icon="attach_file"
+        [isDisabled]="isDisabled()"
+      />
+    </mat-form-field> -->

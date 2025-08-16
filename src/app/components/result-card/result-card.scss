@@ -1,0 +1,21 @@
+@use '@angular/material' as mat;
+
+:host ::ng-deep .mat-mdc-card-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+  color: white;
+  padding: 0.5rem;
+  font-weight: bold;
+}
+
+mat-card {
+  &:hover {
+    @include mat.card-overrides((elevated-container-color: var(--mat-sys-surface-container-highest)));
+  }
+
+  mat-card-actions {
+    justify-content: space-between;
+  }
+}

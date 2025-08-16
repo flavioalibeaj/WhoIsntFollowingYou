@@ -1,0 +1,36 @@
+@switch (type()) { @case ('fab') {
+<button [elevateOnHover]="elevateOnHover()" matFab [disabled]="isDisabled()" [matTooltip]="tooltip()"
+  (click)="onClick()">
+  @if (icon()) {
+  <mat-icon>{{ icon() }}</mat-icon>
+  }
+</button>
+} @case ('extendedFab') {
+<button [elevateOnHover]="elevateOnHover()" matFab extended [disabled]="isDisabled()" [matTooltip]="tooltip()"
+  (click)="onClick()">
+  @if (icon()) {
+  <mat-icon>{{ icon() }}</mat-icon>
+  }
+</button>
+} @case ('miniFab') {
+<button [elevateOnHover]="elevateOnHover()" matMiniFab [disabled]="isDisabled()" [matTooltip]="tooltip()"
+  (click)="onClick()">
+  @if (icon()) {
+  <mat-icon>{{ icon() }}</mat-icon>
+  }
+</button>
+} @case ('icon') {
+<button [elevateOnHover]="elevateOnHover()" matIconButton [disabled]="isDisabled()" [matTooltip]="tooltip()"
+  (click)="onClick()">
+  @if (icon()) {
+  <mat-icon>{{ icon() }}</mat-icon>
+  }
+</button>
+} @default {
+<button [elevateOnHover]="elevateOnHover()" [matButton]="appearance()" [disabled]="isDisabled()" (click)="onClick()">
+  @if (icon()) {
+  <mat-icon>{{ icon() }}</mat-icon>
+  }
+  {{ text() }}
+</button>
+} }

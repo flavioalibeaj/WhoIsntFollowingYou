@@ -1,0 +1,5 @@
+@use '@angular/material' as mat;
+
+mat-card:hover {
+  @include mat.card-overrides((elevated-container-color: var(--mat-sys-surface-dim)));
+}
