@@ -4,11 +4,11 @@ import { FirstCharacter } from '../../pipes/first-character.pipe';
 import { UnixToDate } from '../../pipes/unix-to-date.pipe';
 import { DatePipe } from '@angular/common';
 import { AvatarBackgroundDirective } from '../../directives/avatar-background.directive';
-import { Data } from '../../model/follower.type';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Button } from '../button/button';
 import { Platform } from '@angular/cdk/platform';
+import { UserData } from '../../model/user-data.type';
 
 @Component({
   imports: [
@@ -28,7 +28,7 @@ export class ResultCard {
   private readonly snackBar = inject(MatSnackBar);
   private readonly platform = inject(Platform);
 
-  readonly person = input.required<Data>();
+  readonly person = input.required<UserData>();
 
   protected copyToClipboard() {
     this.clipboard.copy(this.person().href);

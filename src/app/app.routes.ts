@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { stateDataGuard } from './guards/state-data.guard';
 
 export const routes: Routes = [
   {
@@ -7,6 +8,7 @@ export const routes: Routes = [
   },
   {
     path: 'result',
+    canActivate: [stateDataGuard],
     loadComponent: () => import('./pages/result/result').then((c) => c.Result),
   },
   {

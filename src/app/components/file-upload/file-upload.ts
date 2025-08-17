@@ -16,7 +16,7 @@ import { HoverElevationDirective } from '../../directives/hover-elevation.direct
   templateUrl: './file-upload.html',
 })
 export class FileUpload {
-  readonly label = input.required<string>();
+  readonly label = input.required<FileUploadType>();
 
   protected readonly accept = '.json';
 
@@ -72,3 +72,5 @@ export class FileUpload {
     reader.readAsText(file);
   }
 }
+
+type FileUploadType = 'Following' | 'Followers';

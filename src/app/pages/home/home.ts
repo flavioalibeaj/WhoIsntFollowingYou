@@ -4,7 +4,7 @@ import { FileUpload } from '../../components/file-upload/file-upload';
 import { Wify } from '../../services/wify';
 import { Router } from '@angular/router';
 import { Following } from '../../model/following.type';
-import { User } from '../../model/follower.type';
+import { User } from '../../model/user.type';
 
 @Component({
   imports: [Button, FileUpload],
@@ -39,10 +39,8 @@ export class Home {
   }
 
   protected goToResults(): void {
-    const result = this.wify.whoIsntFollowingYou(
-      this.followers(),
-      this.following()
-    );
+    const result = this.wify.getResults(this.followers(), this.following());
+
     this.router.navigate(['/result'], {
       state: {
         result,

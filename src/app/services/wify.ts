@@ -1,36 +1,22 @@
 import { Injectable } from '@angular/core';
-import { User } from '../model/follower.type';
+import { User } from '../model/user.type';
+import { StateData } from '../model/state-data.type';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Wify {
-  whoIsntFollowingYou(followers: User[], following: User[]) {
-    const diff = following.map((follow) => {
-      const follower = followers.find(
-        (f) => f.string_list_data[0].value === follow.string_list_data[0].value
-      );
-      return {
-        ...follow,
-        isFollowing: !!follower,
-      };
-    });
-
-    return diff
-      .filter((d) => !d.isFollowing)
-      .sort(
-        (a, b) =>
-          a.string_list_data[0].timestamp - b.string_list_data[0].timestamp
-      )
-      .map((d) => {
-        const { href, timestamp, value } = d.string_list_data[0];
-
-        return {
-          timestamp,
-          value,
-          href,
-        };
-      });
+  getResults(followers: User[], followings: User[]): StateData[] {
+    return [
+      {
+        label: 'Not Following You',
+        data: this.#getUnreciprocated(followers, followings, 'notFollowingYou'),
+      },
+      {
+        label: 'You do not follow',
+        data: this.#getUnreciprocated(followers, followings, 'youDontFollow'),
+      },
+    ];
   }
 
   getFirstLetter(username: string): string {
@@ -70,5 +56,41 @@ export class Wify {
       Z: '#81c784',
     };
     return colorMap[letter] || '#ccc';
+  }
+
+  #getUnreciprocated(
+    followers: User[],
+    following: User[],
+    type: 'notFollowingYou' | 'youDontFollow'
+  ) {
+    const source = type === 'notFollowingYou' ? following : followers;
+    const target = type === 'notFollowingYou' ? followers : following;
+
+    const diff = source.map((user) => {
+      const match = target.find(
+        (u) => u.string_list_data[0].value === user.string_list_data[0].value
+      );
+
+      return {
+        ...user,
+        isReciprocated: !!match,
+      };
+    });
+
+    return diff
+      .filter((d) => !d.isReciprocated)
+      .sort(
+        (a, b) =>
+          a.string_list_data[0].timestamp - b.string_list_data[0].timestamp
+      )
+      .map((d) => {
+        const { href, timestamp, value } = d.string_list_data[0];
+
+        return {
+          timestamp,
+          value,
+          href,
+        };
+      });
   }
 }
