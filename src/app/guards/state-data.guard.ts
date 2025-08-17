@@ -5,11 +5,10 @@ import { StateData } from '../model/state-data.type';
 export const stateDataGuard: CanActivateFn = () => {
   const router = inject(Router);
 
-  const state = router.getCurrentNavigation()?.extras.state as
-    | StateData[]
-    | undefined;
+  const result: StateData[] | undefined =
+    router.getCurrentNavigation()?.extras.state?.['result'];
 
-  if (!state?.length) {
+  if (!result?.length) {
     router.navigate(['/home']);
     return false;
   }
