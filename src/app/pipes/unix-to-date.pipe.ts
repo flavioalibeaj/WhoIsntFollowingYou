@@ -1,12 +1,13 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { inject, Pipe, PipeTransform } from '@angular/core';
+import { Wify } from '../services/wify';
 
 @Pipe({
   name: 'unixToDate',
 })
 export class UnixToDate implements PipeTransform {
-  transform(unix: number) {
-    const date = new Date(unix * 1000);
+  readonly #wify = inject(Wify);
 
-    return date;
+  transform(unix: number): Date {
+    return this.#wify.getDateFromUnix(unix);
   }
 }
