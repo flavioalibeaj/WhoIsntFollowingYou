@@ -9,7 +9,7 @@ import { User } from '../../model/user.type';
 @Component({
   imports: [Button, FileUpload],
   template: `
-    <div class="flex flex-col items-center gap-4">
+    <div class="flex flex-col items-center gap-10">
       <h1 class="text-xl mt-4 font-medium">Upload files</h1>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
         <wify-file-upload label="Following" (onLoad)="setFollowing($event)" />
@@ -18,6 +18,7 @@ import { User } from '../../model/user.type';
       <wify-button
         text="Check Results"
         icon="search"
+        appearance="tonal"
         [isDisabled]="!followers().length || !following().length"
         (clicked)="goToResults()"
       />
