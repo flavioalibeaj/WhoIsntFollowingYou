@@ -1,26 +1,16 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ResultCard } from '../../components/result-card/result-card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { StateData } from '../../model/state-data.type';
+import { ResultTabContent } from '../../components/result-tab-content/result-tab-content';
 
 @Component({
-  imports: [ResultCard, MatTabsModule],
+  imports: [MatTabsModule, ResultTabContent],
   template: `
     <mat-tab-group>
       @for (item of result; track $index) {
-      <mat-tab [label]="item.label">
-        @if (item.data.length) {
-        <div
-          class="grid gap-5 m-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-        >
-          @for (person of item.data; track $index) { @defer (on viewport) {
-          <wify-result-card [person]="person" />
-          } @placeholder {
-          <p>Large component placeholder</p>
-          } }
-        </div>
-        } @else { there is no data }
+      <mat-tab class="p-10" [label]="item.label">
+        <wify-result-tab-content [item]="item" />
       </mat-tab>
       }
     </mat-tab-group>
