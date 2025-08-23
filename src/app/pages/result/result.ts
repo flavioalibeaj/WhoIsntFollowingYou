@@ -9,7 +9,7 @@ import { ResultTabContent } from '../../components/result-tab-content/result-tab
   template: `
     <mat-tab-group>
       @for (item of result; track $index) {
-      <mat-tab class="p-10" [label]="item.label">
+      <mat-tab class="p-10" [label]="item.tabLabel">
         <wify-result-tab-content [item]="item" />
       </mat-tab>
       }

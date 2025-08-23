@@ -24,19 +24,25 @@ import { MatIconModule } from '@angular/material/icon';
     }
   `,
   template: `
-    <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input matInput [(ngModel)]="searchFilter" />
-      <button
-        matSuffix
-        matIconButton
-        aria-label="Clear"
-        [disabled]="!searchFilter()"
-        (click)="searchFilter.set('')"
-      >
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field>
+    <p class="font-medium text-2xl">
+      {{ item().data.length }} {{ item().tabParagraph }}
+    </p>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3">
+      <mat-form-field class="my-4">
+        <mat-label>Filter</mat-label>
+        <input matInput [(ngModel)]="searchFilter" />
+        <button
+          matSuffix
+          matIconButton
+          aria-label="Clear"
+          [disabled]="!searchFilter()"
+          (click)="searchFilter.set('')"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
 
     @if (items().length) {
     <div

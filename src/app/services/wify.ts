@@ -9,11 +9,13 @@ export class Wify {
   getResults(followers: User[], followings: User[]): StateData[] {
     return [
       {
-        label: 'Not Following You',
+        tabLabel: 'Not Following You',
         data: this.#getUnreciprocated(followers, followings, 'notFollowingYou'),
+        tabParagraph: "people don't follow you back",
       },
       {
-        label: 'You do not follow',
+        tabLabel: 'You do not follow',
+        tabParagraph: 'people not followed back',
         data: this.#getUnreciprocated(followers, followings, 'youDontFollow'),
       },
     ];

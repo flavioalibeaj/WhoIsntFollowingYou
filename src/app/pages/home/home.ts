@@ -48,5 +48,3 @@ export class Home {
     });
   }
 }
-
-// TODO what happens when i put a defer block inside a defer block

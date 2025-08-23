@@ -1,6 +1,7 @@
 import { UserData } from './user-data.type';
 
 export type StateData = {
-  label: string;
+  tabLabel: string;
+  tabParagraph: string;
   data: UserData[];
 };
