@@ -9,8 +9,18 @@ import { ResultTabContent } from '../../components/result-tab-content/result-tab
   template: `
     <mat-tab-group>
       @for (item of result; track $index) {
-      <mat-tab class="p-10" [label]="item.tabLabel">
-        <wify-result-tab-content [item]="item" />
+      <mat-tab [label]="item.tabLabel">
+        <div class="p-10">
+          <p class="font-medium text-2xl">
+            {{ item.data.length }} {{ item.tabParagraph }}
+          </p>
+
+          @defer(on viewport) {
+          <wify-result-tab-content [item]="item" />
+          } @placeholder {
+          <p>Loading ...</p>
+          }
+        </div>
       </mat-tab>
       }
     </mat-tab-group>

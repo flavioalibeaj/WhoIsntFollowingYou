@@ -1,0 +1,5 @@
+@if(pagedItems().length){
+<mat-paginator class="mb-5" [length]="items().length" [pageSize]="pageSize()" [pageSizeOptions]="pageSizeOptions()"
+  [showFirstLastButtons]="true" [pageIndex]="pageIndex()" (page)="handlePageEvent($event)" aria-label="Select page" />
+
+}

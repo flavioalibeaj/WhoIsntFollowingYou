@@ -10,12 +10,16 @@
   font-weight: bold;
 }
 
-mat-card {
-  &:hover {
-    @include mat.card-overrides((elevated-container-color: var(--mat-sys-surface-container-highest)));
-  }
+mat-card:hover {
+  @include mat.card-overrides((elevated-container-color: var(--mat-sys-surface-container-highest)));
+}
 
-  mat-card-actions {
-    justify-content: space-between;
-  }
+mat-card-actions {
+  justify-content: space-between;
+}
+
+.mat-mdc-card-title {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }

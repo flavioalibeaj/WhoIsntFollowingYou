@@ -1,8 +1,19 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { HoverElevationDirective } from '../../directives/hover-elevation.directive';
+import {
+  catchError,
+  finalize,
+  Observable,
+  of,
+  switchMap,
+  take,
+  tap,
+  throwError,
+} from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'wify-file-upload',
@@ -16,6 +27,8 @@ import { HoverElevationDirective } from '../../directives/hover-elevation.direct
   templateUrl: './file-upload.html',
 })
 export class FileUpload {
+  readonly #snackbar = inject(MatSnackBar);
+
   readonly label = input.required<FileUploadType>();
 
   protected readonly accept = '.json';
@@ -39,37 +52,47 @@ export class FileUpload {
 
     this.isDisabled.set(true);
 
-    const reader = new FileReader();
+    of(new FileReader())
+      .pipe(
+        switchMap(
+          (reader) =>
+            new Observable<{ result: string }>((obs) => {
+              reader.onload = () => {
+                obs.next({ result: reader.result as string }), obs.complete();
+              };
 
-    reader.onload = () => {
-      let selectedFile = JSON.parse(reader.result as string);
+              reader.onerror = (err) => obs.error(err);
 
-      try {
-        if (
-          this.label() === 'Following' &&
-          !selectedFile.relationships_following
-        )
-          return;
+              reader.readAsText(file);
+            })
+        ),
+        tap(({ result }) => {
+          const selectedFile = JSON.parse(result);
 
-        if (
-          this.label() === 'Followers' &&
-          !selectedFile?.[0]?.string_list_data?.length
-        )
-          return;
+          if (
+            (this.label() === 'Following' &&
+              !selectedFile.relationships_following) ||
+            (this.label() === 'Followers' &&
+              !selectedFile?.[0]?.string_list_data?.length)
+          ) {
+            throw new Error('The selected file is not a valid file');
+          }
 
-        this.fileName.set(file?.name ?? null);
-        this.onLoad.emit(selectedFile);
-      } catch (e) {
-        // TODO add better error handling
-        selectedFile = null;
-      } finally {
-        this.isDisabled.set(false);
-      }
-    };
-
-    reader.onerror = () => {};
-
-    reader.readAsText(file);
+          this.fileName.set(file?.name ?? null);
+          this.onLoad.emit(selectedFile);
+        }),
+        catchError((e) => {
+          this.#snackbar.open(e, undefined, {
+            duration: 5000,
+          });
+          return throwError(() => e);
+        }),
+        finalize(() => {
+          this.isDisabled.set(false);
+        }),
+        take(1)
+      )
+      .subscribe();
   }
 }
 

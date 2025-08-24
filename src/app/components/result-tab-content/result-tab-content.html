@@ -1,0 +1,27 @@
+<div class="grid md:grid-cols-2 lg:grid-cols-3">
+  <mat-form-field class="my-4">
+    <mat-label>Filter</mat-label>
+    <input matInput [(ngModel)]="searchFilter" />
+    <wify-button matSuffix type="icon" icon="close" [isDisabled]="!searchFilter()" (clicked)="searchFilter.set('')" />
+  </mat-form-field>
+
+  @if (pagedItems().length) {
+  <wify-download-information class="justify-self-end" [usersList]="pagedItems()" [title]="item().dataType" />
+  }
+</div>
+
+<wify-paginator [items]="items()" (onPagedItems)="pagedItems.set($event)" />
+
+@if (pagedItems().length) {
+<div class="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+  @for (person of pagedItems(); track $index) { @defer (on viewport) {
+  <wify-result-card [person]="person" />
+  } @placeholder {
+  <p>Loading ...</p>
+  } }
+</div>
+} @else {
+<div class="flex justify-center">
+  <p class="font-medium text-xl">No data available</p>
+</div>
+}
