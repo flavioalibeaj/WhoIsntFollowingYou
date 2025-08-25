@@ -4,7 +4,7 @@ import { Wify } from './wify';
 import { formatDate } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
-export class DownloadInformationService {
+export class Print {
   readonly #wify = inject(Wify);
   readonly #locale = inject(LOCALE_ID);
 
