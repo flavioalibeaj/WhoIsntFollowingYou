@@ -83,7 +83,7 @@ export class Print {
         <thead>
             <tr>
                 <th>Username</th>
-                <th>Started Following at</th>
+                <th>Started Following At</th>
                 <th>Link</th>
             </tr>
         </thead>

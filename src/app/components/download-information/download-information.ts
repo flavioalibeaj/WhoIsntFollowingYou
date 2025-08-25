@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { UserData } from '../../model/user-data.type';
 import { Print } from '../../services/print';
+import { Pdf } from '../../services/pdf';
 
 @Component({
   selector: 'wify-download-information',
@@ -16,7 +17,7 @@ import { Print } from '../../services/print';
         <mat-icon>print</mat-icon>
         Print
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item (click)="generatePdf()">
         <mat-icon>picture_as_pdf</mat-icon>
         Pdf
       </button>
@@ -33,11 +34,16 @@ import { Print } from '../../services/print';
 })
 export class DownloadInformation {
   readonly #print = inject(Print);
+  readonly #pdf = inject(Pdf);
 
   readonly usersList = input.required<UserData[]>();
   readonly title = input.required<string>();
 
   protected print() {
     this.#print.print(this.usersList(), this.title().toUpperCase());
+  }
+
+  protected generatePdf() {
+    this.#pdf.generatePdf(this.usersList(), this.title().toUpperCase());
   }
 }
