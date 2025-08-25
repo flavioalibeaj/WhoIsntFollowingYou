@@ -9,6 +9,7 @@ export class Pdf {
   readonly #wify = inject(Wify);
   readonly #locale = inject(LOCALE_ID);
 
+  // TODO make it generic
   generatePdf(list: UserData[], title: string) {
     const doc = new jsPDF();
 

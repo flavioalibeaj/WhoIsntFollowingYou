@@ -8,6 +8,7 @@ export class Print {
   readonly #wify = inject(Wify);
   readonly #locale = inject(LOCALE_ID);
 
+  // TODO make it generic
   print(list: UserData[], title: string) {
     const popUpWin = window.open('', 'top=0,left=0,height=100%');
 
