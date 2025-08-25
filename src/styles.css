@@ -9,6 +9,11 @@ body {
 body {
   /* font-family: Roboto, "Helvetica Neue", sans-serif; */
   margin: 0;
+  color-scheme: light;
+
+  &.dark {
+    color-scheme: dark;
+  }
 }
 
 .mdc-notched-outline__notch {
