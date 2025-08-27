@@ -5,6 +5,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { UserData } from '../../model/user-data.type';
 import { Print } from '../../services/print';
 import { Pdf } from '../../services/pdf';
+import { Csv } from '../../services/csv';
+import { Excel } from '../../services/excel';
 
 @Component({
   selector: 'wify-download-information',
@@ -21,11 +23,11 @@ import { Pdf } from '../../services/pdf';
         <mat-icon>picture_as_pdf</mat-icon>
         Pdf
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item (click)="generateCsv()">
         <mat-icon>download</mat-icon>
         Csv
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item (click)="generateExcel()">
         <mat-icon>backup_table</mat-icon>
         Excel
       </button>
@@ -35,6 +37,8 @@ import { Pdf } from '../../services/pdf';
 export class DownloadInformation {
   readonly #print = inject(Print);
   readonly #pdf = inject(Pdf);
+  readonly #csv = inject(Csv);
+  readonly #excel = inject(Excel);
 
   readonly usersList = input.required<UserData[]>();
   readonly title = input.required<string>();
@@ -45,5 +49,13 @@ export class DownloadInformation {
 
   protected generatePdf() {
     this.#pdf.generatePdf(this.usersList(), this.title().toUpperCase());
+  }
+
+  protected generateCsv() {
+    this.#csv.downloadCSV(this.usersList(), this.title().toUpperCase());
+  }
+
+  protected generateExcel() {
+    this.#excel.generateExcel(this.usersList(), this.title().toUpperCase());
   }
 }
