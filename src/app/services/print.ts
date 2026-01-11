@@ -4,10 +4,11 @@ import { Wify } from './wify';
 import { formatDate } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
-export class DownloadInformationService {
+export class Print {
   readonly #wify = inject(Wify);
   readonly #locale = inject(LOCALE_ID);
 
+  // TODO make it generic
   print(list: UserData[], title: string) {
     const popUpWin = window.open('', 'top=0,left=0,height=100%');
 
@@ -83,7 +84,7 @@ export class DownloadInformationService {
         <thead>
             <tr>
                 <th>Username</th>
-                <th>Started Following at</th>
+                <th>Started Following At</th>
                 <th>Link</th>
             </tr>
         </thead>

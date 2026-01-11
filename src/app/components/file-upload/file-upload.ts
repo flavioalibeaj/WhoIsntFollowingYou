@@ -75,16 +75,14 @@ export class FileUpload {
             (this.label() === 'Followers' &&
               !selectedFile?.[0]?.string_list_data?.length)
           ) {
-            throw new Error('The selected file is not a valid file');
+            throw new Error('The selected file is not a valid format');
           }
 
           this.fileName.set(file?.name ?? null);
           this.onLoad.emit(selectedFile);
         }),
         catchError((e) => {
-          this.#snackbar.open(e, undefined, {
-            duration: 5000,
-          });
+          this.#snackbar.open(e);
           return throwError(() => e);
         }),
         finalize(() => {
