@@ -58,7 +58,8 @@ export class FileUpload {
           (reader) =>
             new Observable<{ result: string }>((obs) => {
               reader.onload = () => {
-                obs.next({ result: reader.result as string }), obs.complete();
+                obs.next({ result: reader.result as string });
+                obs.complete();
               };
 
               reader.onerror = (err) => obs.error(err);
@@ -71,7 +72,7 @@ export class FileUpload {
 
           if (
             (this.label() === 'Following' &&
-              !selectedFile.relationships_following) ||
+              !selectedFile.relationships_following?.length) ||
             (this.label() === 'Followers' &&
               !selectedFile?.[0]?.string_list_data?.length)
           ) {

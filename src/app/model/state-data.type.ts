@@ -4,5 +4,10 @@ export type StateData = {
   data: UserData[];
   tabLabel: string;
   tabParagraph: string;
-  dataType: 'unfollowers' | 'followers';
+  dataType: DataType;
 };
+
+export enum DataType {
+  UNFOLLOWERS,
+  FOLLOWERS,
+}

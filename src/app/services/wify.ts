@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/user.type';
-import { StateData } from '../model/state-data.type';
+import { DataType, StateData } from '../model/state-data.type';
 
 @Injectable({
   providedIn: 'root',
@@ -9,16 +9,24 @@ export class Wify {
   getResults(followers: User[], followings: User[]): StateData[] {
     return [
       {
-        data: this.#getUnreciprocated(followers, followings, 'notFollowingYou'),
-        dataType: 'unfollowers',
+        data: this.#getUnreciprocated(
+          followers,
+          followings,
+          DataType.UNFOLLOWERS
+        ),
+        dataType: DataType.UNFOLLOWERS,
         tabLabel: 'Not Following You',
         tabParagraph: "people don't follow you back",
       },
       {
-        dataType: 'followers',
+        dataType: DataType.FOLLOWERS,
         tabLabel: 'You do not follow',
         tabParagraph: 'people not followed back',
-        data: this.#getUnreciprocated(followers, followings, 'youDontFollow'),
+        data: this.#getUnreciprocated(
+          followers,
+          followings,
+          DataType.FOLLOWERS
+        ),
       },
     ];
   }
@@ -68,39 +76,43 @@ export class Wify {
     return date;
   }
 
-  #getUnreciprocated(
-    followers: User[],
-    following: User[],
-    type: 'notFollowingYou' | 'youDontFollow'
-  ) {
-    const source = type === 'notFollowingYou' ? following : followers;
-    const target = type === 'notFollowingYou' ? followers : following;
+  #getUnreciprocated(followers: IgUser[], following: IgUser[], type: DataType) {
+    const source = type === DataType.UNFOLLOWERS ? following : followers;
+    const target = type === DataType.UNFOLLOWERS ? followers : following;
 
-    const diff = source.map((user) => {
-      const match = target.find(
-        (u) => u.string_list_data[0].value === user.string_list_data[0].value
-      );
+    const key = (u: IgUser) =>
+      (u.string_list_data?.[0]?.value ?? u.title ?? '').trim().toLowerCase();
 
-      return {
-        ...user,
-        isReciprocated: !!match,
-      };
-    });
+    const targetKeys = new Set(target.map(key).filter(Boolean));
 
-    return diff
-      .filter((d) => !d.isReciprocated)
+    return source
+      .filter((u) => {
+        const k = key(u);
+        return k && !targetKeys.has(k);
+      })
       .sort(
         (a, b) =>
-          a.string_list_data[0].timestamp - b.string_list_data[0].timestamp
+          (a.string_list_data?.[0]?.timestamp ?? 0) -
+          (b.string_list_data?.[0]?.timestamp ?? 0)
       )
-      .map((d) => {
-        const { href, timestamp, value } = d.string_list_data[0];
+      .map((u) => {
+        const s0 = u.string_list_data?.[0];
+        const username = (s0?.value ?? u.title ?? '').trim();
 
         return {
-          timestamp,
-          value,
-          href,
+          timestamp: s0.timestamp,
+          value: username,
+          href: s0.href,
         };
       });
   }
 }
+
+type IgUser = {
+  title: string;
+  string_list_data: Array<{
+    href: string;
+    value?: string;
+    timestamp: number;
+  }>;
+};
