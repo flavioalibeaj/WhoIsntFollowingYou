@@ -7,6 +7,7 @@ import { Print } from '../../services/print';
 import { Pdf } from '../../services/pdf';
 import { Csv } from '../../services/csv';
 import { Excel } from '../../services/excel';
+import { DataType } from '../../model/state-data.type';
 
 @Component({
   selector: 'wify-download-information',
@@ -41,7 +42,7 @@ export class DownloadInformation {
   readonly #excel = inject(Excel);
 
   readonly usersList = input.required<UserData[]>();
-  readonly title = input.required<string>();
+  readonly title = input.required<DataType>();
 
   protected print() {
     this.#print.print(this.usersList(), this.title().toUpperCase());

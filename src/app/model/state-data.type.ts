@@ -8,6 +8,6 @@ export type StateData = {
 };
 
 export enum DataType {
-  UNFOLLOWERS,
-  FOLLOWERS,
+  UNFOLLOWERS = 'unfollowers',
+  FOLLOWERS = 'followers',
 }
