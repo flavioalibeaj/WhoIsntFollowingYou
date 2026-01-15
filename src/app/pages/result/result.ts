@@ -29,6 +29,6 @@ import { ResultTabContent } from '../../components/result-tab-content/result-tab
 export class Result {
   private readonly router = inject(Router);
 
-  private readonly state = this.router.getCurrentNavigation()?.extras.state;
+  private readonly state = this.router.currentNavigation()?.extras.state;
   protected readonly result?: StateData[] = this.state?.['result'];
 }

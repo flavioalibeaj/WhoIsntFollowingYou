@@ -6,7 +6,7 @@ export const stateDataGuard: CanActivateFn = () => {
   const router = inject(Router);
 
   const result: StateData[] | undefined =
-    router.getCurrentNavigation()?.extras.state?.['result'];
+    router.currentNavigation()?.extras.state?.['result'];
 
   if (!result?.length) {
     router.navigate(['/home']);
