@@ -12,6 +12,7 @@
 
 mat-card:hover {
   @include mat.card-overrides((elevated-container-color: var(--mat-sys-surface-container-highest)));
+  cursor: pointer;
 }
 
 mat-card-actions {
